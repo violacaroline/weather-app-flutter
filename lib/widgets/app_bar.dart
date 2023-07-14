@@ -20,21 +20,38 @@ class _WeatherAppBarState extends State<WeatherAppBar> {
       onPressed: () {},
         icon: const Icon(
         Icons.search,
-        size: 30,
+        size: 40,
         color: Colors.white,
         )
       ),
       actions: [
         Container(
         margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-          child: GestureDetector(
-          onTap: () => print('Menu clicked'),
+          child: PopupMenuButton<String>(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onSelected: (value) {
+            // Handle the menu item selection
+            print('Selected: $value');
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem<String>(
+              value: 'item1',
+                child: Text('Forecast'),
+              ),
+              const PopupMenuItem<String>(
+              value: 'item2',
+                child: Text('About'),
+              ),
+              const PopupMenuItem<String>(
+              value: 'item3',
+                child: Text('Something'),
+              ),
+          ],
             child: const Icon(
-            Icons.menu,
-            size: 30,
-            color: Colors.white,
-            ),
-          ),
+              Icons.menu,
+              color: Colors.white,
+              size: 40,
+            )),
         )
       ],
     );
