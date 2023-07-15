@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BodyBottom extends StatefulWidget {
-  const BodyBottom({super.key});
+class WeatherFooter extends StatefulWidget {
+  const WeatherFooter({super.key});
 
   @override
-  State<BodyBottom> createState() => _BodyBottomState();
+  State<WeatherFooter> createState() => _WeatherFooterState();
 }
 
-class _BodyBottomState extends State<BodyBottom> {
+class _WeatherFooterState extends State<WeatherFooter> {
   @override
   Widget build(BuildContext context) {
     return Column(

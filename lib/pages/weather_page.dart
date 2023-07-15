@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app/widgets/body_main.dart';
-import '/widgets/app_bar.dart';
-import '/widgets/body_bottom.dart';
+import 'package:weather_app/widgets/weather_body.dart';
+import '/widgets/weather_app_bar.dart';
+import '/widgets/weather_footer.dart';
 
 class WeatherPage extends StatefulWidget {
   final String title;
@@ -45,8 +45,8 @@ class _WeatherPageState extends State<WeatherPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BodyMain(),
-                BodyBottom(),
+                WeatherBody(),
+                WeatherFooter(),
               ],
             ),
           )],
