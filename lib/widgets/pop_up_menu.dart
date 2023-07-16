@@ -12,7 +12,7 @@ class _PopUpMenuState extends State<PopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+      margin: const EdgeInsets.fromLTRB(0, 0, 30, 0),
       child: PopupMenuButton<String>(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           onSelected: (value) {
@@ -20,16 +20,16 @@ class _PopUpMenuState extends State<PopUpMenu> {
           },
           itemBuilder: (BuildContext context) => [
             const PopupMenuItem<String>(
+              value: '/',
+              child: Text('Current Weather'),
+            ),
+            const PopupMenuItem<String>(
               value: '/forecast',
               child: Text('Forecast'),
             ),
             const PopupMenuItem<String>(
               value: '/about',
               child: Text('About'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'item3',
-              child: Text('Something'),
             ),
           ],
           child: const Icon(

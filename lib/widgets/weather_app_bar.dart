@@ -17,14 +17,6 @@ class _WeatherAppBarState extends State<WeatherAppBar> {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      leading: IconButton(
-      onPressed: () {},
-        icon: const Icon(
-        Icons.search,
-        size: 40,
-        color: Colors.white,
-        )
-      ),
       actions: const [
         PopUpMenu(),
       ],

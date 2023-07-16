@@ -29,7 +29,7 @@ class _WeatherPageState extends State<WeatherPage> {
       body: Stack(
         children: [
           Image.asset(
-            'assets/sunny.jpg',
+            'assets/snowy.jpg',
             fit: BoxFit.cover,
             height: double.infinity,
             width: double.infinity,

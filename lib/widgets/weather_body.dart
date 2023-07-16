@@ -22,7 +22,7 @@ class _WeatherBodyState extends State<WeatherBody> {
               Text(
                 'Location: Isla Mujeres',
                 style: TextStyle(
-                    fontSize: 35,
+                    fontSize: 40,
                     fontWeight: FontWeight.w300,
                     color: Colors.white
                 ),
@@ -30,7 +30,7 @@ class _WeatherBodyState extends State<WeatherBody> {
               Text(
                 'Time: 2.30pm | Description: Sunny',
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 20,
                     fontWeight: FontWeight.w300,
                     color: Colors.white
                 ),

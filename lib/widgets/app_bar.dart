@@ -10,7 +10,7 @@ class GeneralAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[800],
       actions: const [
         PopUpMenu(),
       ],
