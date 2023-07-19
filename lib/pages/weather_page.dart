@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_app/widgets/weather_body.dart';
 import '/widgets/weather_app_bar.dart';
 import '/widgets/weather_footer.dart';
+import 'package:weather_app/services/open_weather_api.dart';
 
 class WeatherPage extends StatefulWidget {
   final String title;
@@ -13,7 +14,20 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
+  final OpenWeatherApi openWeatherApi = OpenWeatherApi();
   int _counter = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentWeather();
+  }
+
+  void getCurrentWeather() async {
+    Map data = await openWeatherApi.fetchCurrentWeather();
+
+    print('The data $data');
+  }
 
   void _incrementCounter() {
     setState(() {
