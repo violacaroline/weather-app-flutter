@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/weather.dart';
+
 class WeatherFooter extends StatefulWidget {
-  const WeatherFooter({super.key});
+  final Weather currentWeather;
+
+  const WeatherFooter({super.key, required this.currentWeather});
 
   @override
   State<WeatherFooter> createState() => _WeatherFooterState();
@@ -20,12 +24,12 @@ class _WeatherFooterState extends State<WeatherFooter> {
               )
           ),
         ),
-        const Row(
+         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                Text(
+                const Text(
                   'Humidity',
                   style: TextStyle(
                       fontSize: 14,
@@ -34,8 +38,8 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '70%',
-                  style: TextStyle(
+                  '${widget.currentWeather.humidity}%',
+                  style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,
                       color: Colors.white
@@ -45,7 +49,7 @@ class _WeatherFooterState extends State<WeatherFooter> {
             ),
             Column(
               children: [
-                Text(
+                const Text(
                   'Wind',
                   style: TextStyle(
                       fontSize: 14,
@@ -54,8 +58,8 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '10',
-                  style: TextStyle(
+                  '${widget.currentWeather.windSpeed}',
+                  style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,
                       color: Colors.white
@@ -65,7 +69,7 @@ class _WeatherFooterState extends State<WeatherFooter> {
             ),
             Column(
               children: [
-                Text(
+                const Text(
                   'Pressure',
                   style: TextStyle(
                       fontSize: 14,
@@ -74,8 +78,8 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '40',
-                  style: TextStyle(
+                  '${widget.currentWeather.pressure}',
+                  style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,
                       color: Colors.white

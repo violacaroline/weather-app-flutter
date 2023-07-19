@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/weather.dart';
+
 class WeatherBody extends StatefulWidget {
-  const WeatherBody({super.key});
+  final Weather currentWeather;
+
+  const WeatherBody({super.key, required this.currentWeather});
 
   @override
   State<WeatherBody> createState() => _WeatherBodyState();
@@ -10,7 +14,7 @@ class WeatherBody extends StatefulWidget {
 class _WeatherBodyState extends State<WeatherBody> {
   @override
   Widget build(BuildContext context) {
-    return const Expanded(
+    return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -18,18 +22,19 @@ class _WeatherBodyState extends State<WeatherBody> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 80,),
+              const SizedBox(height: 80,),
               Text(
-                'Location: Isla Mujeres',
-                style: TextStyle(
+                widget.currentWeather.location,
+                style: const TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w300,
                     color: Colors.white
                 ),
               ),
               Text(
-                'Time: 2.30pm | Description: Sunny',
-                style: TextStyle(
+                '${DateTime.now().hour}:${DateTime.now().minute} | '
+                    '${widget.currentWeather.description}',
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w300,
                     color: Colors.white
@@ -41,14 +46,14 @@ class _WeatherBodyState extends State<WeatherBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '30\u2103',
-                style: TextStyle(
+                '${widget.currentWeather.temperature}\u2103',
+                style: const TextStyle(
                     fontSize: 85,
                     fontWeight: FontWeight.w200,
                     color: Colors.white
                 ),
               ),
-              Row(
+              const Row(
                 children: [
                   Icon(
                     Icons.wb_sunny_outlined,
