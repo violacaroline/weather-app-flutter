@@ -58,7 +58,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Future<void> getCurrentWeather() async {
     // Map data = await requestHandler.fetchCurrentWeather();
     Map<String, dynamic> decodedData = await requestHandler.fetchCurrentWeather();
-    String? cityName;
+    String? location;
     String? weatherDescription;
     String? weatherMain;
     double? temperature;
@@ -75,7 +75,7 @@ class _WeatherPageState extends State<WeatherPage> {
           ? weatherList[0]
           : {};
 
-      cityName = decodedData['name'];
+      location = decodedData['name'];
 
       weatherDescription = weatherData['description'];
       weatherMain = weatherData['main'];
@@ -92,12 +92,12 @@ class _WeatherPageState extends State<WeatherPage> {
       print('Temperature: $temperature');
       print('Humidity: $humidity');
       print('Pressure: $pressure');
-      print('City Name: $cityName');
+      print('City Name: $location');
     }
 
     setState(() {
       currentWeather = Weather(
-        location: cityName!,
+        location: location!,
         description: weatherDescription!,
         mainDescription: weatherMain!,
         temperature: temperature!.round(),
@@ -113,7 +113,6 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     if (currentWeather == null) {
-      // Display a loading indicator or placeholder widget
       return const LoadingPage();
     } else {
       return Scaffold(
