@@ -9,7 +9,7 @@ class WeatherForecast extends StatefulWidget {
 }
 
 class _WeatherForecastState extends State<WeatherForecast> {
-  List<Widget> _weatherForecastTiles = [];
+  final List<Widget> _weatherForecastTiles = [];
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
 
   @override
@@ -22,10 +22,10 @@ class _WeatherForecastState extends State<WeatherForecast> {
 
   void _getWeatherForecast() {
     List<Weather> weatherByDay = [
-      Weather(location: 'Isla Mujeres', description: 'sunny', temperature: 30, humidity: 75, windSpeed: 4, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'cloudy', temperature: 32, humidity: 80, windSpeed: 7, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'sunny', temperature: 28, humidity: 75, windSpeed: 4, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'rainy', temperature: 29, humidity: 80, windSpeed: 7, pressure: 1000)
+      Weather(location: 'Isla Mujeres', description: 'sunny', mainDescription: 'Clear', temperature: 30, humidity: 75, windSpeed: 4, pressure: 1000),
+      Weather(location: 'Isla Mujeres', description: 'cloudy', mainDescription: 'Clouds', temperature: 32, humidity: 80, windSpeed: 7, pressure: 1000),
+      Weather(location: 'Isla Mujeres', description: 'sunny', mainDescription: 'Clear', temperature: 28, humidity: 75, windSpeed: 4, pressure: 1000),
+      Weather(location: 'Isla Mujeres', description: 'rainy', mainDescription: 'Rain', temperature: 29, humidity: 80, windSpeed: 7, pressure: 1000)
     ];
 
     Future future = Future((){});

@@ -4,6 +4,7 @@ import '../models/weather.dart';
 import '/widgets/weather_app_bar.dart';
 import '/widgets/weather_footer.dart';
 import 'package:weather_app/services/api_request_handler.dart';
+import 'loading_page.dart';
 
 class WeatherPage extends StatefulWidget {
   final String title;
@@ -17,6 +18,7 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   final ApiRequestHandler requestHandler = ApiRequestHandler();
   Weather? currentWeather;
+  String? backGroundImg;
 
   @override
   void initState() {
@@ -24,11 +26,41 @@ class _WeatherPageState extends State<WeatherPage> {
     getCurrentWeather();
   }
 
+  void getBackGroundImg(String weatherMain) {
+    switch (weatherMain) {
+      case 'Clear':
+        setState(() {
+          backGroundImg = 'assets/sunny.jpg';
+        });
+      case 'Clouds':
+        setState(() {
+          backGroundImg = 'assets/partly-cloudy.jpg';
+        });
+      case 'Rain':
+        setState(() {
+          backGroundImg = 'assets/rainy.jpg';
+        });
+      case 'Snow':
+        setState(() {
+          backGroundImg = 'assets/snowy.jpg';
+        });
+      case 'Thunderstorm':
+        setState(() {
+          backGroundImg = 'assets/thunder-storm.jpg';
+        });
+      default:
+        setState(() {
+          backGroundImg = 'assets/overcast.jpg';
+        });
+    }
+  }
+
   Future<void> getCurrentWeather() async {
     // Map data = await requestHandler.fetchCurrentWeather();
     Map<String, dynamic> decodedData = await requestHandler.fetchCurrentWeather();
     String? cityName;
     String? weatherDescription;
+    String? weatherMain;
     double? temperature;
     int? humidity;
     double? windSpeed;
@@ -46,6 +78,7 @@ class _WeatherPageState extends State<WeatherPage> {
       cityName = decodedData['name'];
 
       weatherDescription = weatherData['description'];
+      weatherMain = weatherData['main'];
 
       Map<String, dynamic> mainData = decodedData['main'];
       temperature = mainData['temp'];
@@ -61,32 +94,27 @@ class _WeatherPageState extends State<WeatherPage> {
       print('Pressure: $pressure');
       print('City Name: $cityName');
     }
+
     setState(() {
       currentWeather = Weather(
         location: cityName!,
         description: weatherDescription!,
-        temperature: temperature!.round()!,
+        mainDescription: weatherMain!,
+        temperature: temperature!.round(),
         humidity: humidity!,
         windSpeed: windSpeed!,
         pressure: pressure!,
       );
+
+      getBackGroundImg(weatherMain);
     });
-    /*return Weather(location: cityName!, description: weatherDescription!, temperature: temperature!, humidity: humidity!,
-        windSpeed: windSpeed!, pressure: pressure!);*/
   }
 
   @override
   Widget build(BuildContext context) {
     if (currentWeather == null) {
       // Display a loading indicator or placeholder widget
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Colors.grey,
-            strokeWidth: 7,
-          ),
-        ),
-      );
+      return const LoadingPage();
     } else {
       return Scaffold(
         extendBodyBehindAppBar: true,
@@ -94,7 +122,7 @@ class _WeatherPageState extends State<WeatherPage> {
         body: Stack(
           children: [
             Image.asset(
-              'assets/sunny.jpg',
+              backGroundImg!,
               fit: BoxFit.cover,
               height: double.infinity,
               width: double.infinity,

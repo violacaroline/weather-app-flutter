@@ -12,7 +12,10 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: Text('Im the Loading page'),
+        child: CircularProgressIndicator(
+          color: Colors.grey,
+          strokeWidth: 6,
+        ),
       ),
     );
   }
