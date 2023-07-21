@@ -18,7 +18,7 @@ class _WeatherBodyState extends State<WeatherBody> {
     TimeOfDay currentTime = TimeOfDay.now();
 
     // Create TimeOfDay instances for 08:00 and 20:00
-    TimeOfDay startTime = const TimeOfDay(hour: 8, minute: 0);
+    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
     TimeOfDay endTime = const TimeOfDay(hour: 20, minute: 0);
 
     // Convert TimeOfDay objects to int values for comparison
@@ -30,8 +30,25 @@ class _WeatherBodyState extends State<WeatherBody> {
     bool isDaytime = currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes <= endTimeInMinutes;
 
     // Determine which icon to display based on the time of day
-    IconData iconData = isDaytime ? Icons.wb_sunny_outlined : Icons.nightlight;
+    IconData iconDataIsDaytime = isDaytime ? Icons.wb_sunny_outlined : Icons.nightlight;
     String dayOrNight = isDaytime ? 'Day' : 'Night';
+
+    IconData iconDataWeatherType;
+    switch (widget.currentWeather.mainDescription) {
+      case 'Clear':
+        iconDataWeatherType = Icons.sunny;
+      case 'Clouds':
+        iconDataWeatherType = Icons.cloud_outlined;
+      case 'Rain':
+        iconDataWeatherType = Icons.water_drop_outlined;
+      case 'Snow':
+        iconDataWeatherType = Icons.ac_unit;
+      case 'Thunderstorm':
+        iconDataWeatherType = Icons.thunderstorm_outlined;
+      default:
+        iconDataWeatherType = Icons.error_outline;
+    }
+
 
     return Expanded(
       child: Column(
@@ -50,14 +67,23 @@ class _WeatherBodyState extends State<WeatherBody> {
                     color: Colors.white
                 ),
               ),
-              Text(
-                '${DateTime.now().hour}:${DateTime.now().minute} | '
-                    '${widget.currentWeather.description}',
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white
-                ),
+              Row(
+                children: [
+                  Text(
+                    '${DateTime.now().hour}:${DateTime.now().minute} | '
+                        '${widget.currentWeather.description}',
+                    style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white
+                    ),
+                  ),
+                  const SizedBox(width: 20,),
+                  Icon(
+                    iconDataWeatherType, // Use the iconData variable here
+                    color: Colors.white, // Set the color for the icon
+                  ),
+                ],
               ),
             ],
           ),
@@ -75,7 +101,7 @@ class _WeatherBodyState extends State<WeatherBody> {
                Row(
                 children: [
                   Icon(
-                    iconData,
+                    iconDataIsDaytime,
                     color: Colors.white,
                   ),
                   const SizedBox(width: 10,),
