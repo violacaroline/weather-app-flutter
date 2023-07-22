@@ -24,30 +24,28 @@ class _ForecastPageState extends State<ForecastPage> {
   Future<void> getForecastedWeather() async {
     List decodedData = await requestHandler.fetchForecastedWeather();
 
-    List<ForecastedWeather> forecastedWeatherList = decodedData.map((data) {
-      // Parse the 'dt_txt' string into a DateTime object
-      DateTime dtTxt = DateTime.parse(data['dt_txt']);
+    setState(() {
+      forecastedWeatherList = decodedData.map((data) {
+        // Parse the 'dt_txt' string into a DateTime object
+        DateTime dtTxt = DateTime.parse(data['dt_txt']);
 
-      // Extract date and time components
-      String date = '${dtTxt.year}-${dtTxt.month.toString().padLeft(2, '0')}-${dtTxt.day.toString().padLeft(2, '0')}';
-      String time = '${dtTxt.hour.toString().padLeft(2, '0')}:${dtTxt.minute.toString().padLeft(2, '0')}';
+        // Extract date and time components
+        String date = '${dtTxt.year}-${dtTxt.month.toString().padLeft(2, '0')}-${dtTxt.day.toString().padLeft(2, '0')}';
+        String time = '${dtTxt.hour.toString().padLeft(2, '0')}:${dtTxt.minute.toString().padLeft(2, '0')}';
 
-      // Assuming the 'icon' field is inside the 'weather' list
-      String iconCode = data['weather'][0]['icon'];
-      String iconUrl = 'https://openweathermap.org/img/wn/$iconCode@2x.png';
+        // Assuming the 'icon' field is inside the 'weather' list
+        String iconCode = data['weather'][0]['icon'];
+        String iconUrl = 'https://openweathermap.org/img/wn/$iconCode@2x.png';
 
-      return ForecastedWeather(
-        date: date,
-        time: time,
-        description: data['weather'][0]['description'],
-        temperature: data['main']['temp'].round(), // Assuming temperature is in decimal format
-        iconUrl: iconUrl,
-      );
-    }).toList();
-
-    for (ForecastedWeather data in forecastedWeatherList) {
-      print('New forecast list with relevant data $data');
-    }
+        return ForecastedWeather(
+          date: date,
+          time: time,
+          description: data['weather'][0]['description'],
+          temperature: data['main']['temp'].round(),
+          iconUrl: iconUrl,
+        );
+      }).toList();
+    });
   }
 
   @override
