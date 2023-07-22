@@ -44,7 +44,25 @@ class ApiRequestHandler {
   }
 
   // Get the forecast of the current location
-  fetchForecastedWeather() {
+  fetchForecastedWeather() async {
+    try {
+      Position position = await getCurrentLocation();
 
+      var url = Uri.https('api.openweathermap.org', '/data/2.5/forecast', {
+        'lat': '${position.latitude}',
+        'lon': '${position.longitude}',
+        'appid': env.open_weather_api_key,
+        'units': 'metric',
+      });
+
+      var response = await http.get(url);
+
+      List forecastList = jsonDecode(response.body)['list'];
+
+      return forecastList;
+
+    } catch (error) {
+      print('Error: $error');
+    }
   }
 }

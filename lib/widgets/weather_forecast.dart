@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/forecasted_weather.dart';
 import 'package:weather_app/models/weather.dart';
 
 class WeatherForecast extends StatefulWidget {
-  const WeatherForecast({super.key});
+  List<ForecastedWeather>? forecastedWeather = [];
+
+  WeatherForecast({super.key, required this.forecastedWeather});
 
   @override
   State<WeatherForecast> createState() => _WeatherForecastState();
@@ -11,6 +14,8 @@ class WeatherForecast extends StatefulWidget {
 class _WeatherForecastState extends State<WeatherForecast> {
   final List<Widget> _weatherForecastTiles = [];
   final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  final Tween<Offset> _offset = Tween(
+      begin: const Offset(1, 0), end: const Offset(0, 0));
 
   @override
   void initState() {
@@ -20,26 +25,7 @@ class _WeatherForecastState extends State<WeatherForecast> {
     });
   }
 
-  void _getWeatherForecast() {
-    List<Weather> weatherByDay = [
-      Weather(location: 'Isla Mujeres', description: 'sunny', mainDescription: 'Clear', temperature: 30, humidity: 75, windSpeed: 4, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'cloudy', mainDescription: 'Clouds', temperature: 32, humidity: 80, windSpeed: 7, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'sunny', mainDescription: 'Clear', temperature: 28, humidity: 75, windSpeed: 4, pressure: 1000),
-      Weather(location: 'Isla Mujeres', description: 'rainy', mainDescription: 'Rain', temperature: 29, humidity: 80, windSpeed: 7, pressure: 1000)
-    ];
-
-    Future future = Future((){});
-    weatherByDay.forEach((Weather weather) {
-      future = future.then((_) {
-        return Future.delayed(const Duration(milliseconds: 200), () {
-        _weatherForecastTiles.add(_createTile(weather));
-        _listKey.currentState?.insertItem(_weatherForecastTiles.length - 1);
-        });
-      });
-    });
-  }
-
-  Widget _createTile(Weather weather) {
+  Widget _createTile(ForecastedWeather forecastedWeather) {
     return ListTile(
       contentPadding: const EdgeInsets.all(25),
       title: Column(
@@ -51,13 +37,31 @@ class _WeatherForecastState extends State<WeatherForecast> {
                   Icons.sunny
               ),
               const SizedBox(width: 20,),
-              Column(
+              Row(
                 children: [
-                  Text(weather.description,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w300),
+                  Column(
+                    children: [
+                      Text(forecastedWeather.description,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300),
+                      ),
+                      Text('${forecastedWeather.temperature}',
+                        style: const TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.w300),
+                      ),
+                    ],
                   ),
-                  Text('${weather.temperature}',
-                    style: const TextStyle(fontSize: 35, fontWeight: FontWeight.w300),
+                  Column(
+                    children: [
+                      Text(forecastedWeather.date,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w300),
+                      ),
+                      Text(forecastedWeather.time,
+                        style: const TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.w300),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -68,19 +72,32 @@ class _WeatherForecastState extends State<WeatherForecast> {
     );
   }
 
-  final Tween<Offset> _offset = Tween(begin: const Offset(1, 0), end: const Offset(0, 0));
+  void _getWeatherForecast() {
+    Future future = Future(() {});
+    if (widget.forecastedWeather != null) {
+      for (var forecastedWeather in widget.forecastedWeather!) {
+        future = future.then((_) {
+          return Future.delayed(const Duration(milliseconds: 200), () {
+            _weatherForecastTiles.add(_createTile(forecastedWeather));
+            _listKey.currentState?.insertItem(_weatherForecastTiles.length - 1);
+          });
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedList(
-      key: _listKey,
-      initialItemCount: _weatherForecastTiles.length,
-      itemBuilder: (context, index, animation) {
-        return SlideTransition(
-          position: animation.drive(_offset),
-          child: _weatherForecastTiles[index],
-        );
-      }
+        key: _listKey,
+        initialItemCount: _weatherForecastTiles.length,
+        itemBuilder: (context, index, animation) {
+          return SlideTransition(
+            position: animation.drive(_offset),
+            child: _weatherForecastTiles[index],
+          );
+        }
     );
   }
 }
+

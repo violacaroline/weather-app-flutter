@@ -56,7 +56,6 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   Future<void> getCurrentWeather() async {
-    // Map data = await requestHandler.fetchCurrentWeather();
     Map<String, dynamic> decodedData = await requestHandler.fetchCurrentWeather();
     String? location;
     String? weatherDescription;
@@ -65,9 +64,6 @@ class _WeatherPageState extends State<WeatherPage> {
     int? humidity;
     double? windSpeed;
     int? pressure;
-
-    print('The data: $decodedData');
-    print('The time: ${DateTime.now()}');
 
     if (decodedData != null) {
       List<dynamic> weatherList = decodedData['weather'];
@@ -87,12 +83,6 @@ class _WeatherPageState extends State<WeatherPage> {
 
       Map<String, dynamic> windData = decodedData['wind'];
       windSpeed = windData['speed'];
-
-      print('Description: $weatherDescription');
-      print('Temperature: $temperature');
-      print('Humidity: $humidity');
-      print('Pressure: $pressure');
-      print('City Name: $location');
     }
 
     setState(() {
