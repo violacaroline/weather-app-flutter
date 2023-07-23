@@ -2,16 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../models/weather.dart';
 
-class WeatherFooter extends StatefulWidget {
+class WeatherFooter extends StatelessWidget {
   final Weather currentWeather;
 
   const WeatherFooter({super.key, required this.currentWeather});
 
-  @override
-  State<WeatherFooter> createState() => _WeatherFooterState();
-}
-
-class _WeatherFooterState extends State<WeatherFooter> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -38,7 +33,7 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '${widget.currentWeather.humidity}%',
+                  '${currentWeather.humidity}%',
                   style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,
@@ -58,7 +53,7 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '${widget.currentWeather.windSpeed}',
+                  '${currentWeather.windSpeed}',
                   style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,
@@ -78,7 +73,7 @@ class _WeatherFooterState extends State<WeatherFooter> {
                   ),
                 ),
                 Text(
-                  '${widget.currentWeather.pressure}',
+                  '${currentWeather.pressure}',
                   style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w300,

@@ -2,53 +2,45 @@ import 'package:flutter/material.dart';
 
 import '../models/weather.dart';
 
-class WeatherBody extends StatefulWidget {
+class WeatherBody extends StatelessWidget {
   final Weather currentWeather;
 
   const WeatherBody({super.key, required this.currentWeather});
 
-  @override
-  State<WeatherBody> createState() => _WeatherBodyState();
-}
+  bool determineIsDaytime(TimeOfDay currentTime) {
+    const TimeOfDay startTime = TimeOfDay(hour: 7, minute: 0);
+    const TimeOfDay endTime = TimeOfDay(hour: 20, minute: 0);
+    final int currentTimeInMinutes = currentTime.hour * 60 + currentTime.minute;
+    final int startTimeInMinutes = startTime.hour * 60 + startTime.minute;
+    final int endTimeInMinutes = endTime.hour * 60 + endTime.minute;
 
-class _WeatherBodyState extends State<WeatherBody> {
+    return currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes <= endTimeInMinutes;
+  }
+
+  IconData getWeatherIcon() {
+    switch (currentWeather.mainDescription) {
+      case 'Clear':
+        return Icons.sunny;
+      case 'Clouds':
+        return Icons.cloud_outlined;
+      case 'Rain':
+        return Icons.water_drop_outlined;
+      case 'Snow':
+        return Icons.ac_unit;
+      case 'Thunderstorm':
+        return Icons.thunderstorm_outlined;
+      default:
+        return Icons.error_outline;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Get the current time of day
-    TimeOfDay currentTime = TimeOfDay.now();
-
-    // Create TimeOfDay instances for 08:00 and 20:00
-    TimeOfDay startTime = const TimeOfDay(hour: 7, minute: 0);
-    TimeOfDay endTime = const TimeOfDay(hour: 20, minute: 0);
-
-    // Convert TimeOfDay objects to int values for comparison
-    int currentTimeInMinutes = currentTime.hour * 60 + currentTime.minute;
-    int startTimeInMinutes = startTime.hour * 60 + startTime.minute;
-    int endTimeInMinutes = endTime.hour * 60 + endTime.minute;
-
-    // Check if the current time is between 08:00 and 20:00
-    bool isDaytime = currentTimeInMinutes >= startTimeInMinutes && currentTimeInMinutes <= endTimeInMinutes;
-
-    // Determine which icon to display based on the time of day
-    IconData iconDataIsDaytime = isDaytime ? Icons.wb_sunny_outlined : Icons.nightlight;
-    String dayOrNight = isDaytime ? 'Day' : 'Night';
-
-    IconData iconDataWeatherType;
-    switch (widget.currentWeather.mainDescription) {
-      case 'Clear':
-        iconDataWeatherType = Icons.sunny;
-      case 'Clouds':
-        iconDataWeatherType = Icons.cloud_outlined;
-      case 'Rain':
-        iconDataWeatherType = Icons.water_drop_outlined;
-      case 'Snow':
-        iconDataWeatherType = Icons.ac_unit;
-      case 'Thunderstorm':
-        iconDataWeatherType = Icons.thunderstorm_outlined;
-      default:
-        iconDataWeatherType = Icons.error_outline;
-    }
-
+    final TimeOfDay currentTime = TimeOfDay.now();
+    final bool isDaytime = determineIsDaytime(currentTime);
+    final IconData iconDataIsDaytime = isDaytime ? Icons.wb_sunny_outlined : Icons.nightlight;
+    final String dayOrNight = isDaytime ? 'Day' : 'Night';
+    final IconData iconDataWeatherType = getWeatherIcon();
 
     return Expanded(
       child: Column(
@@ -60,7 +52,7 @@ class _WeatherBodyState extends State<WeatherBody> {
             children: [
               const SizedBox(height: 80,),
               Text(
-                widget.currentWeather.location,
+                currentWeather.location,
                 style: const TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.w300,
@@ -71,7 +63,7 @@ class _WeatherBodyState extends State<WeatherBody> {
                 children: [
                   Text(
                     '${DateTime.now().hour}:${DateTime.now().minute} | '
-                        '${widget.currentWeather.description}',
+                        '${currentWeather.description}',
                     style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
@@ -80,8 +72,8 @@ class _WeatherBodyState extends State<WeatherBody> {
                   ),
                   const SizedBox(width: 20,),
                   Icon(
-                    iconDataWeatherType, // Use the iconData variable here
-                    color: Colors.white, // Set the color for the icon
+                    iconDataWeatherType,
+                    color: Colors.white,
                   ),
                 ],
               ),
@@ -91,7 +83,7 @@ class _WeatherBodyState extends State<WeatherBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${widget.currentWeather.temperature}\u2103',
+                '${currentWeather.temperature}\u2103',
                 style: const TextStyle(
                     fontSize: 85,
                     fontWeight: FontWeight.w200,

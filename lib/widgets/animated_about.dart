@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AnimatedAbout extends StatelessWidget {
-  const AnimatedAbout({super.key});
+  final String appAboutTitle;
+  final String appAboutInfo;
+
+  const AnimatedAbout({super.key, required this.appAboutTitle, required this.appAboutInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -14,21 +17,20 @@ class AnimatedAbout extends StatelessWidget {
           child: child,
         );
     },
-      child: const Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('The Weather App Project',
+          Text(appAboutTitle,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w300,
             ),
           ),
-          SizedBox(height: 30,),
-          Text('This Flutter App is developed by Andrea Viola Caroline Åkesson'
-              ' according to specifics by Linnaeus University, Sweden',
+          const SizedBox(height: 30,),
+          Text(appAboutInfo,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w300,
             ),

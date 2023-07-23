@@ -65,25 +65,23 @@ class _WeatherPageState extends State<WeatherPage> {
     double? windSpeed;
     int? pressure;
 
-    if (decodedData != null) {
-      List<dynamic> weatherList = decodedData['weather'];
-      Map<String, dynamic> weatherData = weatherList.isNotEmpty
-          ? weatherList[0]
-          : {};
+    List<dynamic> weatherList = decodedData['weather'];
+    Map<String, dynamic> weatherData = weatherList.isNotEmpty
+        ? weatherList[0]
+        : {};
 
-      location = decodedData['name'];
+    location = decodedData['name'];
 
-      weatherDescription = weatherData['description'];
-      weatherMain = weatherData['main'];
+    weatherDescription = weatherData['description'];
+    weatherMain = weatherData['main'];
 
-      Map<String, dynamic> mainData = decodedData['main'];
-      temperature = mainData['temp'];
-      humidity = mainData['humidity'];
-      pressure = mainData['pressure'];
+    Map<String, dynamic> mainData = decodedData['main'];
+    temperature = mainData['temp'];
+    humidity = mainData['humidity'];
+    pressure = mainData['pressure'];
 
-      Map<String, dynamic> windData = decodedData['wind'];
-      windSpeed = windData['speed'];
-    }
+    Map<String, dynamic> windData = decodedData['wind'];
+    windSpeed = windData['speed'];
 
     setState(() {
       currentWeather = Weather(
