@@ -39,7 +39,7 @@ class ApiRequestHandler {
       return decodedData;
 
     } catch (error) {
-      print('Error: $error');
+      throw Exception("Error fetching current weather: $error");
     }
   }
 
@@ -62,7 +62,7 @@ class ApiRequestHandler {
       return forecastList;
 
     } catch (error) {
-      print('Error: $error');
+      throw Exception("Error fetching forecasted weather: $error");
     }
   }
 }

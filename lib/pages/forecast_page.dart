@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:weather_app/models/forecasted_weather.dart';
 import 'package:weather_app/widgets/app_bar.dart';
 import 'package:weather_app/widgets/weather_forecast.dart';
@@ -22,30 +23,34 @@ class _ForecastPageState extends State<ForecastPage> {
   }
 
   Future<void> getForecastedWeather() async {
-    List decodedData = await requestHandler.fetchForecastedWeather();
+    try {
+      List decodedData = await requestHandler.fetchForecastedWeather();
 
-    setState(() {
-      forecastedWeatherList = decodedData.map((data) {
-        // Parse the 'dt_txt' string into a DateTime object
-        DateTime dtTxt = DateTime.parse(data['dt_txt']);
+      setState(() {
+        forecastedWeatherList = decodedData.map((data) {
+          // Parse the 'dt_txt' string into a DateTime object
+          DateTime dtTxt = DateTime.parse(data['dt_txt']);
 
-        // Extract date and time components
-        String date = '${dtTxt.year}-${dtTxt.month.toString().padLeft(2, '0')}-${dtTxt.day.toString().padLeft(2, '0')}';
-        String time = '${dtTxt.hour.toString().padLeft(2, '0')}:${dtTxt.minute.toString().padLeft(2, '0')}';
+          // Extract date and time components
+          String date = '${dtTxt.year}-${dtTxt.month.toString().padLeft(2, '0')}-${dtTxt.day.toString().padLeft(2, '0')}';
+          String time = '${dtTxt.hour.toString().padLeft(2, '0')}:${dtTxt.minute.toString().padLeft(2, '0')}';
 
-        // Assuming the 'icon' field is inside the 'weather' list
-        String iconCode = data['weather'][0]['icon'];
-        String iconUrl = 'https://openweathermap.org/img/wn/$iconCode@2x.png';
+          // Assuming the 'icon' field is inside the 'weather' list
+          String iconCode = data['weather'][0]['icon'];
+          String iconUrl = 'https://openweathermap.org/img/wn/$iconCode@2x.png';
 
-        return ForecastedWeather(
-          date: date,
-          time: time,
-          description: data['weather'][0]['description'],
-          temperature: data['main']['temp'].round(),
-          iconUrl: iconUrl,
-        );
-      }).toList();
-    });
+          return ForecastedWeather(
+            date: date,
+            time: time,
+            description: data['weather'][0]['description'],
+            temperature: data['main']['temp'].round(),
+            iconUrl: iconUrl,
+          );
+        }).toList();
+      });
+    } catch (error) {
+      GoRouter.of(context).go('/error');
+    }
   }
 
   @override
