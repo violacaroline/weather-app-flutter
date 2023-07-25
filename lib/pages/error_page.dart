@@ -34,7 +34,7 @@ class ErrorPage extends StatelessWidget {
               onPressed: () {
                 GoRouter.of(context).go('/');
               },
-              child: const Text("Go to home page"),
+              child: const Text("Try Again"),
             ),
           ],
         ),

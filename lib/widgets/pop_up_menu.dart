@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class PopUpMenu extends StatefulWidget {
+class PopUpMenu extends StatelessWidget {
   const PopUpMenu({super.key});
 
-  @override
-  State<PopUpMenu> createState() => _PopUpMenuState();
-}
-
-class _PopUpMenuState extends State<PopUpMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
