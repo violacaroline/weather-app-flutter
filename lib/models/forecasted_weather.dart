@@ -14,7 +14,6 @@ class ForecastedWeather {
     required this.iconUrl
   });
 
-
   @override
   String toString() {
     return 'Date: $date, Time: $time, Description: $description, Temperature: $temperature, Icon URL: $iconUrl';

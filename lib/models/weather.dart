@@ -7,6 +7,13 @@ class Weather {
   final double windSpeed;
   final int pressure;
 
-  Weather ({required this.location, required this.description, required this.mainDescription, required this.temperature,
-    required this.humidity, required this.windSpeed, required this.pressure});
+  Weather ({
+    required this.location,
+    required this.description,
+    required this.mainDescription,
+    required this.temperature,
+    required this.humidity,
+    required this.windSpeed,
+    required this.pressure
+  });
 }

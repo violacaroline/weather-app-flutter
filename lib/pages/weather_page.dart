@@ -27,6 +27,14 @@ class _WeatherPageState extends State<WeatherPage> {
     getCurrentWeather();
   }
 
+  Future<void> refresh() async {
+    setState(() {
+      currentWeather = null;
+    });
+
+    await getCurrentWeather();
+  }
+
   void getBackGroundImg(String weatherMain) {
     switch (weatherMain) {
       case 'Clear':
@@ -110,7 +118,7 @@ class _WeatherPageState extends State<WeatherPage> {
     } else {
       return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: const WeatherAppBar(),
+        appBar: WeatherAppBar(refresh: refresh),
         body: Stack(
           children: [
             Image.asset(
