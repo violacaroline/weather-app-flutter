@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/models/forecasted_weather.dart';
-import 'package:weather_app/models/weather.dart';
-
 import '../pages/loading_page.dart';
 
 class WeatherForecast extends StatefulWidget {
-  List<ForecastedWeather>? forecastedWeather = [];
+  final List<ForecastedWeather>? forecastedWeather;
 
-  WeatherForecast({super.key, required this.forecastedWeather});
+  const WeatherForecast({super.key, required this.forecastedWeather});
 
   @override
   State<WeatherForecast> createState() => _WeatherForecastState();
@@ -114,4 +112,3 @@ class _WeatherForecastState extends State<WeatherForecast> {
     }
   }
 }
-
